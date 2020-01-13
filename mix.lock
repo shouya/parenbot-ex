@@ -1,0 +1,5 @@
+%{
+  "extwitter": {:hex, :extwitter, "0.11.0", "9472e19f1711bc60bc7efa594353164532475d7c47ea9f1bb66d4faa889b079e", [:mix], [{:oauther, "~> 1.1", [hex: :oauther, repo: "hexpm", optional: false]}, {:poison, "~> 3.0", [hex: :poison, repo: "hexpm", optional: false]}], "hexpm"},
+  "oauther": {:hex, :oauther, "1.1.1", "7d8b16167bb587ecbcddd3f8792beb9ec3e7b65c1f8ebd86b8dd25318d535752", [:mix], [], "hexpm"},
+  "poison": {:hex, :poison, "3.1.0", "d9eb636610e096f86f25d9a46f35a9facac35609a7591b3be3326e99a0484665", [:mix], [], "hexpm"},
+}
