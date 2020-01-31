@@ -18,8 +18,15 @@ defmodule Parenbot.OAuth do
 
   def oauth_headers(method, url, query) do
     query = Enum.map(query, fn {k, v} -> {to_string(k), v} end)
-    creds = current_credential()
-    params = OAuther.sign(to_string(method), url, query, current_credential)
+
+    params =
+      OAuther.sign(
+        to_string(method),
+        url,
+        query,
+        current_credential()
+      )
+
     {auth_hdrs, _query} = OAuther.header(params)
     auth_hdrs
   end
