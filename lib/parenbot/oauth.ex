@@ -40,7 +40,9 @@ defmodule Parenbot.OAuth do
   end
 
   @impl true
-  def handle_call(:current_credential, _, [cred | xs]), do: {:reply, :ok, cred}
+  def handle_call(:current_credential, _, [cred | _] = creds) do
+    {:reply, cred, creds}
+  end
 
   def handle_call(:rotate, _, [cred]) do
     Process.sleep(:timer.seconds(5))

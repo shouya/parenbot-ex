@@ -1,7 +1,10 @@
 defmodule Parenbot.Twitter.Client do
   @api_base "https://api.twitter.com/1.1"
 
-  @client Tesla.client([Tesla.Middleware.JSON])
+  @client Tesla.client([
+            Tesla.Middleware.JSON,
+            Tesla.Middleware.Logger
+          ])
 
   alias Parenbot.OAuth
 
@@ -48,5 +51,18 @@ defmodule Parenbot.Twitter.Client do
 
   def get_user() do
     request(:get, "/account/verify_credentials.json")
+  end
+
+  def list_followers(opts \\ []) do
+    request(:get, "/followers/ids.json", query: opts)
+  end
+
+  def list_following(opts \\ []) do
+    request(:get, "/friends/ids.json", query: opts)
+  end
+
+  def follow(uid, opts \\ []) do
+    query = [{:user_id, uid} | opts]
+    request(:post, "/friendships/create.json", query: query)
   end
 end
