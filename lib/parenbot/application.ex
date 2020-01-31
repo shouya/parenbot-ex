@@ -3,7 +3,7 @@ defmodule Parenbot.Application do
 
   def start(_type, _args) do
     children = [
-      # Parenbot.Replier
+      Parenbot.Replier
       # Parenbot.Follower
     ]
 
