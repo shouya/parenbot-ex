@@ -20,8 +20,8 @@ defmodule Parenbot.Replier do
   @impl true
   def handle_continue(:get_since_id, _) do
     case Twitter.Client.home_timeline(count: 1) do
-      [tweet] -> {:noreply, %{since_id: max_id([tweet])}}
-      _ -> {:stop, :failed_to_update, nil}
+      {:ok, [tweet]} -> {:noreply, %{since_id: max_id([tweet])}}
+      {:error, e} -> {:stop, {:failed_to_update, e}, nil}
     end
   end
 
