@@ -1,4 +1,7 @@
 defmodule Parenbot.Twitter.Cleanser do
+  # skip retweets
+  def cleanse_tweet(%{"retweeted_status" => %{}}), do: nil
+
   def cleanse_tweet(%{
         "id" => id,
         "full_text" => text,
