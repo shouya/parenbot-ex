@@ -3,8 +3,8 @@ defmodule Parenbot.Application do
 
   def start(_type, _args) do
     children = [
-      Parenbot.Replier,
       Parenbot.OAuth,
+      Parenbot.Replier,
       Parenbot.Follower
     ]
 
