@@ -8,10 +8,10 @@ defmodule Parenbot.OAuth do
   @impl true
   def init(_) do
     System.get_env()
-    |> Enum.filter(fn
+    |> Enum.map(fn
       {"OAUTH_CREDENTIAL_" <> _, val} -> parse_credential(val)
+      _ -> :invalid
     end)
-    |> Enum.map(&parse_credential/1)
     |> Enum.filter(&(&1 != :invalid))
     |> case do
       [] -> {:stop, "no valid cred found"}
