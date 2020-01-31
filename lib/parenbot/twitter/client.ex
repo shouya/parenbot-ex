@@ -6,7 +6,7 @@ defmodule Parenbot.Twitter.Client do
       @client Tesla.client([Tesla.Middleware.JSON, Tesla.Middleware.Logger])
 
     _ ->
-      @client Tesla.client([Tesla.Middleware.Logger])
+      @client Tesla.client([Tesla.Middleware.JSON])
   end
 
   alias Parenbot.OAuth
