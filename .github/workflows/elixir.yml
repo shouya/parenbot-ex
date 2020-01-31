@@ -14,6 +14,15 @@ jobs:
       with:
         elixir-version: 1.10.0 # Define the elixir version [required]
         otp-version: 22.2 # Define the OTP version [required]
+    - uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/deps
+        key: deps
+    - uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/_build
+        key: _build
+
     - name: Install Dependencies
       run: mix deps.get
     # - name: Run Tests
@@ -34,12 +43,3 @@ jobs:
         source: parenbot.tar.gz
         target: opt/parenbot-ex/
         overwrite: true
-    - uses: actions/cache@v1
-      with:
-        path: ${{ github.workspace }}/deps
-        key: deps
-    - uses: actions/cache@v1
-      with:
-        path: ${{ github.workspace }}/_build
-        key: _build
-
