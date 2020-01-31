@@ -1,0 +1,27 @@
+name: Elixir CI
+
+on: push
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup elixir
+      uses: actions/setup-elixir@v1
+      with:
+        elixir-version: 1.9.4 # Define the elixir version [required]
+        otp-version: 22.2 # Define the OTP version [required]
+    - name: Install Dependencies
+      run: mix deps.get
+    - name: Run Tests
+      run: MIX_ENV=test mix test
+    - name: Build release
+      run: MIX_ENV=prod mix release && tar czvf parenbot.tar.gz -C _build/prod/rel/parenbot .
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: parenbot.tar.gz
+        path: parenbot.tar.gz
