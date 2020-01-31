@@ -24,19 +24,23 @@ defmodule Parenbot.OAuth do
     auth_hdrs
   end
 
+  defp current_credential() do
+    GenServer.call(__MODULE__, :current_credential, :timer.seconds(20))
+  end
+
   def rotate() do
     GenServer.call(__MODULE__, :rotate)
   end
 
-  defp current_credential() do
-    GenServer.call(__MODULE__, :current_credential)
+  @impl true
+  def handle_call(:current_credential, _, [cred | xs]), do: {:reply, :ok, cred}
+
+  def handle_call(:rotate, _, [cred]) do
+    Process.sleep(:timer.seconds(5))
+    {:reply, :ok, [cred]}
   end
 
-  @impl true
-  def handle_call(:current_credential, _, [cred | xs]), do: cred
-
-  @impl true
-  def handle_call(:rotate, _, [cred | xs]), do: xs ++ [cred]
+  def handle_call(:rotate, _, [cred | xs]), do: {:reply, :ok, xs ++ [cred]}
 
   defp parse_credentials(creds) do
     creds

@@ -21,10 +21,18 @@ defmodule Parenbot.Twitter.Client do
       |> Keyword.put(:url, url)
 
     case Tesla.request(@client, tesla_opts) do
-      {:ok, %{status: code, body: body}} when code in 200..299 -> {:ok, body}
-      {:ok, %{status: 429}} -> {:error, :rate_limited}
-      {:ok, e} -> {:error, e}
-      {:error, e} -> {:error, e}
+      {:ok, %{status: code, body: body}} when code in 200..299 ->
+        {:ok, body}
+
+      {:ok, %{status: 429}} ->
+        OAuth.rotate()
+        request(method, path, opts)
+
+      {:ok, e} ->
+        {:error, e}
+
+      {:error, e} ->
+        {:error, e}
     end
   end
 

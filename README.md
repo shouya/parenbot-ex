@@ -17,8 +17,8 @@ Export these two variable and build the program. Now you're ready to go.
 ## Roadmap
 
 - [x] reply completed parens
-- [ ] auto follow back
 - [x] multiple auth token rotation
+- [ ] auto follow back
 
 ## Copyright
 
