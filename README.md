@@ -2,7 +2,6 @@
 
 A bot that completes parents on Twitter.
 
-
 ## Usage
 
 ### Authentication
