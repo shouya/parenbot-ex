@@ -14,3 +14,9 @@ environment variables `ACCESS_TOKEN` and `ACCESS_TOKEN_SECRET`.
 
 Export these two variable and build the program. Now you're ready to go.
 
+## Roadmap
+
+- [x] reply completed parens
+- [ ] auto follow back
+- [ ] multiple auth token rotation
+
