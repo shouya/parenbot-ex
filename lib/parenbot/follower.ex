@@ -18,7 +18,7 @@ defmodule Parenbot.Follower do
   @impl true
   def handle_info(:follow_back, _) do
     for follower_uid <- new_followers() do
-      follow(user_id)
+      follow(follower_uid)
     end
 
     Process.send_after(self(), :follow_back, @follow_back_delay)
