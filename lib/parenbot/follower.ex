@@ -25,7 +25,7 @@ defmodule Parenbot.Follower do
     {:noreply, nil}
   end
 
-  defp new_followers do
+  def new_followers do
     followers = get_ids(Client.list_followers(count: 100))
     following = get_ids(Client.list_following(count: 500))
 
@@ -41,8 +41,8 @@ defmodule Parenbot.Follower do
     end
   end
 
-  defp get_ids({:ok, %{"id" => ids}}), do: ids
-  defp get_ids(_), do: nil
+  def get_ids({:ok, %{"ids" => ids}}), do: ids
+  def get_ids(_), do: nil
 
   defp follow(uid) do
     case Client.follow(uid) do
