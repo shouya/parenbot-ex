@@ -1,10 +1,13 @@
 defmodule Parenbot.Twitter.Client do
   @api_base "https://api.twitter.com/1.1"
 
-  @client Tesla.client([
-            Tesla.Middleware.JSON,
-            Tesla.Middleware.Logger
-          ])
+  case Mix.env() do
+    :dev ->
+      @client Tesla.client([Tesla.Middleware.JSON, Tesla.Middleware.Logger])
+
+    _ ->
+      @client Tesla.client([Tesla.Middleware.Logger])
+  end
 
   alias Parenbot.OAuth
 

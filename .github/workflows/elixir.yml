@@ -21,12 +21,10 @@ jobs:
     - name: Build release
       run: |
         export MIX_ENV=prod
-        export CONSUMER_KEY=${{ secrets.CONSUMER_KEY }}
-        export CONSUMER_SECRET=${{ secrets.CONSUMER_SECRET }}
-        export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
-        export ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}
         mix release
-        tar czvf parenbot.tar.gz -C _build/prod/rel/parenbot .
+        cd _build/prod/rel/parenbot
+        echo "${{ secrets.oauth_credentials }}" >> start.sh
+        tar czvf parenbot.tar.gz .
     - name: Upload to server
       uses: appleboy/scp-action@master
       with:

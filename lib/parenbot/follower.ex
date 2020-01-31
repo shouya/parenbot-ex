@@ -3,7 +3,7 @@ defmodule Parenbot.Follower do
 
   alias Parenbot.Twitter.Client
 
-  @follow_back_delay :timer.mintes(5)
+  @follow_back_delay :timer.minutes(5)
 
   def start_link(opts) do
     GenServer.start_link(__MODULE__, opts, name: __MODULE__)
