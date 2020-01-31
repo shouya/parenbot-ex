@@ -57,7 +57,7 @@ defmodule Parenbot.OAuth do
   defp parse_credential(cred) do
     cred
     |> String.trim()
-    |> String.split(&1, ",")
+    |> String.split(",")
     |> case do
       [a, b, c, d] ->
         OAuther.credentials(
