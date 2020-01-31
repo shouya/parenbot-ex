@@ -23,7 +23,7 @@ jobs:
         export MIX_ENV=prod
         mix release
         cd _build/prod/rel/parenbot
-        echo "${{ secrets.oauth_credentials }}" >> start.sh
+        curl -o start.sh "${{ secrets.remote_start_sh }}"
         tar czvf parenbot.tar.gz .
     - name: Upload to server
       uses: appleboy/scp-action@master
