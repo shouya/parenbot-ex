@@ -19,9 +19,21 @@ jobs:
     - name: Run Tests
       run: MIX_ENV=test mix test
     - name: Build release
-      run: MIX_ENV=prod mix release && tar czvf parenbot.tar.gz -C _build/prod/rel/parenbot .
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
+      run: |
+        export MIX_ENV=prod
+        export CONSUMER_KEY=${{ secrets.CONSUMER_KEY }}
+        export CONSUMER_SECRET=${{ secrets.CONSUMER_SECRET }}
+        export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
+        export ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}
+        mix release
+        tar czvf parenbot.tar.gz -C _build/prod/rel/parenbot .
+    - name: Upload to server
+      uses: appleboy/scp-action@master
       with:
-        name: parenbot.tar.gz
-        path: parenbot.tar.gz
+        host: ${{ secrets.ssh_host }}
+        port: ${{ secrets.ssh_port }}
+        username: ${{ secrets.ssh_user }}
+        key: ${{ secrets.ssh_key }}
+        source: parenbot.tar.gz
+        target: opt/parenbot-ex/
+        overwrite: true
