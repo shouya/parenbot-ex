@@ -3,9 +3,9 @@ defmodule Parenbot.Application do
 
   def start(_type, _args) do
     children = [
-      # Parenbot.Replier,
-      Parenbot.OAuth
-      # Parenbot.Follower
+      Parenbot.Replier,
+      Parenbot.OAuth,
+      Parenbot.Follower
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]
