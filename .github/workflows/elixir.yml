@@ -20,11 +20,10 @@ jobs:
     #   run: MIX_ENV=test mix test
     - name: Build release
       run: |
-        export MIX_ENV=prod
-        mix release
-        pushd _build/prod/rel/parenbot
+        MIX_ENV=prod mix release --overwrite
+        cd _build/prod/rel/parenbot
         curl -o start.sh "${{ secrets.remote_start_sh }}"
-        popd
+        cd ${{ github.workspace }}
         tar czvf parenbot.tar.gz . -C _build/prod/rel/parenbot
     - name: Upload to server
       uses: appleboy/scp-action@master
@@ -36,3 +35,12 @@ jobs:
         source: parenbot.tar.gz
         target: opt/parenbot-ex/
         overwrite: true
+    - uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/deps
+        key: deps
+    - uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/_build
+        key: _build
+
