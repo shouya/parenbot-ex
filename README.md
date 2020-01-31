@@ -1,24 +1,21 @@
 # Parenbot
 
-A bot that completes parentheses on Twitter.
+A bot that completes parentheses on Twitter. <https://twitter.com/parenbot>
 
 ## Usage
 
-### Authentication
-
-You must export at least two environment variables `CONSUMER_KEY` and
-`CONSUMER_SECRET` for the program to work. On the first run, export these two
-environment variables and run `mix run --no-halt`. Follow the prompt to
-authenticate your twitter account and follow the instruction to get another two
-environment variables `ACCESS_TOKEN` and `ACCESS_TOKEN_SECRET`.
-
-Export these two variable and build the program. Now you're ready to go.
-
-## Roadmap
+## Features
 
 - [x] reply completed parens
 - [x] multiple auth token rotation
 - [x] auto follow back
+
+### Setup
+
+You must provide pre-authorized oauth credentials for the program to function.
+
+1. Export "OAUTH_CREDENTIAL_n" environment variables with different "n" value. The value of the environment variable is in format of "<CONSUMER_KEY>,<CONSUMER_SECRET>,<ACCESS_TOKEN>,<ACCESS_TOKEN_SECRET>".
+2. Run `mix run --no-halt`
 
 ## Copyright
 

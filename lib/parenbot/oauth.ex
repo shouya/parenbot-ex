@@ -7,12 +7,15 @@ defmodule Parenbot.OAuth do
 
   @impl true
   def init(_) do
-    "OAUTH_CREDENTIALS"
-    |> System.get_env("")
-    |> parse_credentials()
+    System.get_env()
+    |> Enum.filter(fn
+      {"OAUTH_CREDENTIAL_" <> _, val} -> parse_credential(val)
+    end)
+    |> Enum.map(&parse_credential/1)
+    |> Enum.filter(&(&1 != :invalid))
     |> case do
-      {:ok, creds} -> {:ok, creds}
-      {:error, e} -> {:stop, e}
+      [] -> {:stop, "no valid cred found"}
+      creds -> {:ok, creds}
     end
   end
 
@@ -51,12 +54,11 @@ defmodule Parenbot.OAuth do
 
   def handle_call(:rotate, _, [cred | xs]), do: {:reply, :ok, xs ++ [cred]}
 
-  defp parse_credentials(creds) do
-    creds
-    |> String.split("\n")
-    |> Enum.map(&String.trim/1)
-    |> Enum.map(&String.split(&1, ","))
-    |> Enum.map(fn
+  defp parse_credential(cred) do
+    cred
+    |> String.trim()
+    |> String.split(&1, ",")
+    |> case do
       [a, b, c, d] ->
         OAuther.credentials(
           consumer_key: a,
@@ -67,11 +69,6 @@ defmodule Parenbot.OAuth do
 
       _ ->
         :invalid
-    end)
-    |> Enum.filter(&(&1 != :invalid))
-    |> case do
-      [] -> {:error, "no valid oauth credentials found"}
-      creds -> {:ok, creds}
     end
   end
 end
