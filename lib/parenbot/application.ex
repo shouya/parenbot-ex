@@ -3,7 +3,8 @@ defmodule Parenbot.Application do
 
   def start(_type, _args) do
     children = [
-      Parenbot.Twitter
+      # Parenbot.Replier
+      # Parenbot.Follower
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]
