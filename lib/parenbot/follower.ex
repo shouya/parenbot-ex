@@ -27,7 +27,7 @@ defmodule Parenbot.Follower do
 
   defp new_followers do
     followers = get_ids(Client.list_followers(count: 100))
-    following = get_ids(Client.list_followers(count: 500))
+    following = get_ids(Client.list_following(count: 500))
 
     if is_nil(followers) or is_nil(following) do
       []
