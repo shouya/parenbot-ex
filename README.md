@@ -18,7 +18,7 @@ Export these two variable and build the program. Now you're ready to go.
 
 - [x] reply completed parens
 - [ ] auto follow back
-- [ ] multiple auth token rotation
+- [x] multiple auth token rotation
 
 ## Copyright
 

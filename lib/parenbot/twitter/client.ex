@@ -1,22 +1,18 @@
 defmodule Parenbot.Twitter.Client do
   @api_base "https://api.twitter.com/1.1"
 
-  @oauth_creds OAuther.credentials(Application.get_env(:parenbot, :oauth))
+  @client Tesla.client([Tesla.Middleware.JSON])
 
-  @client Tesla.client([
-            Tesla.Middleware.JSON,
-            Tesla.Middleware.Logger
-          ])
+  alias Parenbot.OAuth
 
   @spec request(Tesla.Env.method(), String.t(), Tesla.options()) ::
           Tesla.Env.result() | :no_return
   def request(method, path, opts \\ []) do
     headers = opts[:headers] || []
-    query = Enum.map(opts[:query] || [], fn {k, v} -> {to_string(k), v} end)
+    query = opts[:query] || []
 
     url = to_string(Tesla.build_url(Path.join(@api_base, path), query))
-    params = OAuther.sign(to_string(method), url, query, @oauth_creds)
-    {auth_hdrs, _query} = OAuther.header(params)
+    auth_hdrs = OAuth.oauth_headers(method, url, query)
 
     tesla_opts =
       opts
