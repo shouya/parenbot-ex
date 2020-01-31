@@ -11,7 +11,7 @@ defmodule Parenbot.Follower do
 
   @impl true
   def init(_) do
-    send(self(), :follow_back)
+    Process.send_after(self(), :follow_back, 1000)
     {:ok, nil}
   end
 
@@ -22,7 +22,7 @@ defmodule Parenbot.Follower do
     end
 
     Process.send_after(self(), :follow_back, @follow_back_delay)
-    {:ok, nil}
+    {:noreply, nil}
   end
 
   defp new_followers do
