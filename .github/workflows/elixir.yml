@@ -21,10 +21,10 @@ jobs:
     - name: Build release
       run: |
         MIX_ENV=prod mix release --overwrite
-        cd _build/prod/rel/parenbot
         curl -o start.sh "${{ secrets.remote_start_sh }}"
-        cd ${{ github.workspace }}
-        tar czvf parenbot.tar.gz . -C _build/prod/rel/parenbot
+        tar czvf parenbot.tar.gz \
+          -C _build/prod/rel/parenbot . \
+          -C ${{ github.workspace }} start.sh
     - name: Upload to server
       uses: appleboy/scp-action@master
       with:
