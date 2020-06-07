@@ -51,6 +51,10 @@ defmodule Parenbot.Replier do
     end
   end
 
+  # silently ignore network errors
+  def handle_info({:ssl_closed, _}, s), do: {:noreply, s}
+
+
   defp max_id([]), do: nil
 
   defp max_id(tweets) do

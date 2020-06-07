@@ -25,6 +25,9 @@ defmodule Parenbot.Follower do
     {:noreply, nil}
   end
 
+  # silently ignore network errors
+  def handle_info({:ssl_closed, _}, s), do: {:noreply, s}
+
   def new_followers do
     followers = get_ids(Client.list_followers(count: 100))
     following = get_ids(Client.list_following(count: 500))
