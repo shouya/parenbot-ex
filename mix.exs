@@ -25,7 +25,8 @@ defmodule Parenbot.MixProject do
       {:oauther, "~> 1.1"},
       {:tesla, "~> 1.3"},
       {:hackney, "~> 1.10"},
-      {:jason, ">= 1.0.0"}
+      {:jason, ">= 1.0.0"},
+      {:sentry, "~> 7.0"}
     ]
   end
 end
